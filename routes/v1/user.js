@@ -16,12 +16,17 @@ router.get('/search/', function(req, res) {
     res.send("searching... " + " " + gender + " " + firstname + " " + lastname + " " + email + " " + country);
 });
 
-/* GET user id */
+/**
+ * TODO basic auth
+ * GET user with id
+ * */
 router.get('/:id', function(req, res) {
     res.send('user id = ' + req.params.id);
 });
 
-/* GET home page. */
+/**
+ * GET home page.
+ * */
 router.get('/', function(req, res, next) {
     //var hash = crypto.createHash('sha256').update('testing').digest('hex'); //how to hash sth in sha256
     res.render('index', { title: 'User' }); //index is index.jade

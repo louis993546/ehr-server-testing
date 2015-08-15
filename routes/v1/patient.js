@@ -4,6 +4,11 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/search/', function (req, res) {
+    var gender = req.query.gender;
+    res.send('searching stuff: ' + gender);
+});
+
 /* GET with patient id */
 router.get('/:id', function(req, res) {
     //TODO basic auth
