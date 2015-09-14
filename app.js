@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-//var basicAuth = require('basic-auth');  //it will be useful soon
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');

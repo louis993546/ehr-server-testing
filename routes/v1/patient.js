@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var ba = require('basic-auth');
+var su = require('../../utils/string'); //FIXME I don't think this is the best practice
 
 router.get('/search/', function (req, res) {
     var gender = req.query.gender;
@@ -23,8 +24,13 @@ router.get('/:id', function(req, res) {
 });
 
 router.post('/', function (req, res) {
-    var gender = req.query.gender;
-    res.send(gender);
+    var body = req.body;
+    var message;
+    message = su.extend_or_replace(message, 'race: ' + body.race + '\n');
+    message = su.extend_or_replace(message, 'gender: ' + body.gender + '\n');
+    message = su.extend_or_replace(message, 'name: ' + body.name + '\n');
+    message = su.extend_or_replace(message, 'birthday: ' + body.birthday + '\n');
+    res.send(message);
 });
 
 /* GET home page. */
