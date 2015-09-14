@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
+var ba = require('basic-auth')
 
 router.get('/search/', function (req, res) {
     var gender = req.query.gender;
@@ -11,8 +12,9 @@ router.get('/search/', function (req, res) {
 
 /* GET with patient id */
 router.get('/:id', function(req, res) {
-    //TODO basic auth
-    res.send('patient id = ' + req.params.id);
+    var user = ba(req);
+    var message = 'username = ' + user.name + '\n' + 'password = ' + user.pass + '\n' + 'patient id = ' + req.params.id;
+    res.send(message);
 });
 
 /* GET home page. */
