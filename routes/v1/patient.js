@@ -22,6 +22,11 @@ router.get('/:id', function(req, res) {
     res.send(message);
 });
 
+router.post('/', function (req, res) {
+    var gender = req.query.gender;
+    res.send(gender);
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Patient' });
