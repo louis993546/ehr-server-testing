@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var ba = require('basic-auth');
+var mysql = require('mysql');
 var su = require('../../utils/string'); //FIXME I don't think this is the best practice
 
 router.get('/search/', function (req, res) {
@@ -21,6 +22,27 @@ router.get('/:id', function(req, res) {
     }
     message = message + 'username = ' + user.name + '\n' + 'password = ' + user.pass + '\n' + 'patient id = ' + req.params.id;
     res.send(message);
+
+    var connection = mysql.createConnection({
+        //host     : 'localhost',
+        socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+        user: 'root',
+        password: 'root',
+        database: 'testing'
+    });
+    connection.connect(function (err) {
+        if (err)
+            console.log('connect error: ' + err);
+    });
+    connection.query('SELECT * FROM test;', function (err, rows, fields) {
+        if (err) {
+            console.log('query error: ' + err);
+        } else if (rows.length > 0) {
+            console.log('getting sth');
+            console.log(JSON.stringify(rows));
+        }
+    });
+    connection.end();
 });
 
 router.post('/', function (req, res) {
