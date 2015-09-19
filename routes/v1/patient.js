@@ -22,27 +22,6 @@ router.get('/:id', function(req, res) {
     }
     message = message + 'username = ' + user.name + '\n' + 'password = ' + user.pass + '\n' + 'patient id = ' + req.params.id;
     res.send(message);
-
-    var connection = mysql.createConnection({
-        //host     : 'localhost',
-        socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-        user: 'root',
-        password: 'root',
-        database: 'testing'
-    });
-    connection.connect(function (err) {
-        if (err)
-            console.log('connect error: ' + err);
-    });
-    connection.query('SELECT * FROM test;', function (err, rows, fields) {
-        if (err) {
-            console.log('query error: ' + err);
-        } else if (rows.length > 0) {
-            console.log('getting sth');
-            console.log(JSON.stringify(rows));
-        }
-    });
-    connection.end();
 });
 
 router.post('/', function (req, res) {
@@ -53,6 +32,53 @@ router.post('/', function (req, res) {
     message = su.extend_or_replace(message, 'name: ' + body.name + '\n');
     message = su.extend_or_replace(message, 'birthday: ' + body.birthday + '\n');
     res.send(message);
+});
+
+router.get('/test-mysql/', function (req, res, next) {
+    if (req.param.test == 1) {
+        var connection1 = mysql.createConnection({
+            host: '127.7.36.130',
+            port: 3306,
+            user: 'louis993546',
+            password: '449017400023',
+            database: 'php'
+        });
+        connection1.connect(function (err) {
+            if (err)
+                console.log('connect error: ' + err);
+        });
+
+        connection1.query('SELECT * FROM Persons;', function (err, rows, fields) {
+            if (err) {
+                console.log('query error: ' + err);
+            } else if (rows.length > 0) {
+                console.log('getting sth');
+                console.log(JSON.stringify(rows));
+            }
+        });
+        connection1.end();
+    } else if (req.param.test == 2) {
+        var connection2 = mysql.createConnection({
+            //host     : 'localhost',
+            socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+            user: 'root',
+            password: 'root',
+            database: 'testing'
+        });
+        connection2.connect(function (err) {
+            if (err)
+                console.log('connect error: ' + err);
+        });
+        connection2.query('SELECT * FROM test;', function (err, rows, fields) {
+            if (err) {
+                console.log('query error: ' + err);
+            } else if (rows.length > 0) {
+                console.log('getting sth');
+                console.log(JSON.stringify(rows));
+            }
+        });
+        connection2.end();
+    }
 });
 
 /* GET home page. */
